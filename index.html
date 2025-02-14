@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interactive Mobile Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+
+        /* General Styles */
+
+        * {
+
+            margin: 0;
+
+            padding: 0;
+
+            box-sizing: border-box;
+
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f4f4;
+
+            display: flex;
+
+            flex-direction: column;
+
+            height: 100vh;
+
+            overflow-x: hidden;
+
+        }
+
+        /* Header */
+
+        header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 10px;
+
+            background-color: #f0f0f0;
+
+        }
+
+        .profile-outer, .setting {
+
+            width: 40px;
+
+            height: 40px;
+
+            background: #ccc;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            cursor: pointer;
+
+        }
+
+        .search-bar {
+
+            flex-grow: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            border: 2px solid #ccc;
+
+            border-radius: 25px;
+
+            padding: 5px;
+
+            background-color: #fff;
+
+            margin: 0 10px;
+
+        }
+
+        .search-input {
+
+            border: none;
+
+            outline: none;
+
+            padding: 5px;
+
+            flex-grow: 1;
+
+            font-size: 14px;
+
+        }
+
+        /* Slider */
+
+        .slider-container {
+
+            position: relative;
+
+            overflow: hidden;
+
+            margin: 10px;
+
+        }
+
+        .slider {
+
+            display: flex;
+
+            gap: 10px;
+
+            transition: transform 0.3s ease-out;
+
+        }
+
+        .card {
+
+            flex: 0 0 %;
+
+            background-color: white;
+
+            border-radius: 10px;
+
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+            padding: 10px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            border: 1px solid #ccc;
+
+        }
+
+        .card iframe {
+
+            width: 100%;
+
+            height: 180px;
+
+            border: none;
+
+            border-radius: 10px;
+
+        }
+
+        .title {
+
+            margin-top: 10px;
+
+            width: 300px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            font-size: 16px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding-right: 4px;
+
+        }
+
+       
+
+      
+        /* Like and Share Buttons */
+
+        .actions {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 10px;
+
+        }
+
+        .like-btn, .share-btn, .details-btn {
+
+            padding: 8px 12px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #f0f0f0;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            transition: background-color 0.3s;
+
+        }
+
+         .details-btn:hover, .share-btn:hover {
+
+            background-color: #007BFF;
+            color: white
+
+        }
+
+        .like-btn.liked {
+
+            background-color: ;
+
+            color: red;
+           
+          
+
+}
+      .like-btn:active {
+        
+        font-size: 18px
+          
+          }
+
+        
+
+        /* Comment Section */
+
+        .comment-section {
+
+            margin-top: 10px;
+
+            border-top: 1px solid #ccc;
+
+            padding-top: 10px;
+
+        }
+
+        .comment-input {
+
+            width: 100%;
+
+            padding: 8px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+
+        }
+
+        .comment-btn {
+
+            padding: 8px 12px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #007BFF;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: background-color 0.3s;
+
+        }
+
+        .comment-btn:hover {
+
+            background-color: #0056b3;
+
+        }
+
+        .comments {
+
+            margin-top: 10px;
+
+        }
+
+        .comment {
+
+            background-color: #f9f9f9;
+
+            padding: 8px;
+
+            border-radius: 5px;
+
+            margin-bottom: 5px;
+
+            font-size: 14px;
+
+        }
+
+        /* Footer */
+
+        footer {
+
+            height: 60px;
+
+            display: flex;
+
+            justify-content: space-around;
+
+            align-items: center;
+
+            background: #f0f0f0;
+
+            position: fixed;
+
+            bottom: 0;
+
+            width: 100%;
+
+        }
+
+        .icon-container {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background-color: #e0e0e0;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            transition: background-color 0.3s;
+
+        }
+
+        .icon-container.active {
+
+            background-color: black;
+
+            color: white;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+        <div class="profile-outer" aria-label="Profile">
+
+            <i class="fa-regular fa-user"></i>
+
+        </div>
+
+        <div class="search-bar">
+
+            <input type="text" class="search-input" placeholder="Search...">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+        </div>
+
+        <div class="setting" aria-label="Settings">
+
+            <i class="fa-solid fa-gear"></i>
+
+        </div>
+
+    </header>
+
+    <!-- Slider -->
+
+    <main>
+
+        <div class="slider-container">
+
+            <div class="slider">
+
+                <div class="card">
+
+                    <iframe src="https://www.youtube.com/embed/5Of9tn1gZQ8" title="Mufti Tariq Masood Lecture" allowfullscreen></iframe>
+
+                    <div class="title">Mufti Tariq Masood Lecture</div>
+
+                    
+
+                    <!-- Like and Share Buttons -->
+
+                    <div class="actions">
+
+                        <button class="like-btn">
+
+                            <i class="fa-regular fa-heart"></i> Like
+                          <button class="details-btn">details</button>
+
+                        
+
+                        <button class="share-btn">
+
+                            <i class="fa-solid fa-share"></i> Share</button>
+
+                     
+
+                    </div>
+
+                    <!-- Comment Section -->
+
+                    <div class="comment-section">
+
+                        <input type="text" class="comment-input" placeholder="Add a comment...">
+
+                        <button class="comment-btn">Post</button>
+
+                        <div class="comments"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <iframe src="https://www.youtube.com/embed/1G4isv_Fylg" title="Sample Video 2" allowfullscreen></iframe>
+
+                    <div class="title">Sample Video 2</div>
+
+                   
+
+                    <!-- Like and Share Buttons -->
+
+                    <div class="actions">
+
+                        <button class="like-btn">
+
+                            <i class="fa-regular fa-heart"></i> Like
+                             <button class="details-btn">details</button>
+
+                        </button>
+
+                        <button class="share-btn">
+
+                            <i class="fa-solid fa-share"></i> Share
+
+                        </button>
+
+                    </div>
+
+                    <!-- Comment Section -->
+
+                    <div class="comment-section">
+
+                        <input type="text" class="comment-input" placeholder="Add a comment...">
+
+                        <button class="comment-btn">Post</button>
+
+                        <div class="comments"></div>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+
+                    <iframe src="https://www.youtube.com/embed/3fumBcKC6RE" title="Sample Video 3" allowfullscreen></iframe>
+
+                    <div class="title">Sample Video 3</div>
+
+                   
+
+                    <!-- Like and Share Buttons -->
+
+                    <div class="actions">
+
+                        <button class="like-btn">
+
+                            <i class="fa-regular fa-heart"></i> Like
+                             <button class="details-btn">details</button>
+
+                        </button>
+
+                        <button class="share-btn">
+
+                            <i class="fa-solid fa-share"></i> Share
+
+                        </button>
+
+                    </div>
+
+                    <!-- Comment Section -->
+
+                    <div class="comment-section">
+
+                        <input type="text" class="comment-input" placeholder="Add a comment...">
+
+                        <button class="comment-btn">Post</button>
+
+                        <div class="comments"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="icon-container" aria-label="User">
+
+            <i class="fa-regular fa-user"></i>
+
+        </div>
+
+        <div class="icon-container active" aria-label="Home">
+
+            <i class="material-icons">home</i>
+
+        </div>
+
+        <div class="icon-container" aria-label="Quran">
+
+            <i class="fa-solid fa-book-quran"></i>
+
+        </div>
+
+        <div class="icon-container" aria-label="Play">
+
+            <i class="fa-solid fa-circle-play"></i>
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        // Slider Variables
+
+        const slider = document.querySelector('.slider');
+
+        const cards = document.querySelectorAll('.card');
+
+        let isDragging = false;
+
+        let startX = 0;
+
+        let currentTranslate = 0;
+
+        let prevTranslate = 0;
+
+        // Set card width dynamically
+
+        const cardWidth = cards[0].offsetWidth + 10; // Include gap between cards
+
+        // Event Listeners for Dragging
+
+        slider.addEventListener('mousedown', (e) => {
+
+            isDragging = true;
+
+            startX = e.pageX;
+
+            slider.style.transition = "none";
+
+        });
+
+        slider.addEventListener('touchstart', (e) => {
+
+            isDragging = true;
+
+            startX = e.touches[0].clientX;
+
+            slider.style.transition = "none";
+
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+
+            if (!isDragging) return;
+
+            const currentPosition = e.pageX || e.touches[0].clientX;
+
+            const distance = currentPosition - startX;
+
+            currentTranslate = prevTranslate + distance;
+
+            setSliderPosition();
+
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+
+            if (!isDragging) return;
+
+            const currentPosition = e.touches[0].clientX;
+
+            const distance = currentPosition - startX;
+
+            currentTranslate = prevTranslate + distance;
+
+            setSliderPosition();
+
+        });
+
+        slider.addEventListener('mouseup', releaseDrag);
+
+        slider.addEventListener('touchend', releaseDrag);
+
+        // Function to release drag
+
+        function releaseDrag() {
+
+            isDragging = false;
+
+            const snappedIndex = Math.round(currentTranslate / -cardWidth);
+
+            currentTranslate = Math.min(Math.max(-snappedIndex * cardWidth, -(cards.length - 1) * cardWidth), 0);
+
+            slider.style.transition = "transform 0.3s ease-out";
+
+            setSliderPosition();
+
+            prevTranslate = currentTranslate;
+
+        }
+
+        function setSliderPosition() {
+
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+
+        }
+
+        // Footer Icon Active State Management
+
+        const footerIcons = document.querySelectorAll('.icon-container');
+
+        let activeIndex = 1; // Home icon is active by default
+
+        footerIcons.forEach((icon, index) => {
+
+            icon.addEventListener('click', () => {
+
+                if (activeIndex !== null) {
+
+                    footerIcons[activeIndex].classList.remove('active');
+
+                }
+
+                if (activeIndex !== index) {
+
+                    icon.classList.add('active');
+
+                    activeIndex = index;
+
+                } else {
+
+                    activeIndex = null;
+
+                }
+
+            });
+
+        });
+
+        // Like Button Functionality
+
+        const likeButtons = document.querySelectorAll('.like-btn');
+
+        likeButtons.forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                button.classList.toggle('liked');
+
+                const icon = button.querySelector('i');
+
+                if (button.classList.contains('liked')) {
+
+                    icon.classList.remove('fa-regular');
+
+                    icon.classList.add('fa-solid');
+
+                } else {
+
+                    icon.classList.remove('fa-solid');
+
+                    icon.classList.add('fa-regular');
+
+                }
+
+            });
+
+        });
+
+        // Comment Section Functionality
+
+        const commentInputs = document.querySelectorAll('.comment-input');
+
+        const commentButtons = document.querySelectorAll('.comment-btn');
+
+        const commentsContainers = document.querySelectorAll('.comments');
+
+        commentButtons.forEach((button, index) => {
+
+            button.addEventListener('click', () => {
+
+                const commentText = commentInputs[index].value.trim();
+
+                if (commentText) {
+
+                    const commentDiv = document.createElement('div');
+
+                    commentDiv.classList.add('comment');
+
+                    commentDiv.textContent = commentText;
+
+                    commentsContainers[index].appendChild(commentDiv);
+
+                    commentInputs[index].value = ''; // Clear input
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>
